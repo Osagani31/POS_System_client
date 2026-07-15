@@ -1,0 +1,66 @@
+<div class="auth-screen">
+  <div class="auth-card">
+
+    <div class="auth-brand">
+      <span class="brand-mark">
+        <mat-icon>storefront</mat-icon>
+      </span>
+      <span class="brand-name">POS System</span>
+    </div>
+
+    <div class="auth-heading">
+      <h1>Welcome back</h1>
+      <p>Sign in to open the register and manage today's business.</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="login()" class="auth-form">
+
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" type="email" matInput placeholder="Ex. pat@example.com" autocomplete="email">
+        <mat-icon matPrefix>mail_outline</mat-icon>
+        <mat-error *ngIf="form.get('email')?.hasError('required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('email')">
+          Enter a valid email address
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input formControlName="password" [type]="hidePassword ? 'password' : 'text'"
+               matInput placeholder="Enter your password" autocomplete="current-password">
+        <mat-icon matPrefix>lock_outline</mat-icon>
+        <button mat-icon-button matSuffix type="button" class="visibility-toggle"
+                (click)="hidePassword = !hidePassword"
+                [attr.aria-label]="'Toggle password visibility'">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.get('password')?.hasError('required')">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+
+      <div class="auth-row">
+        <mat-checkbox color="primary" class="remember-me">Remember me</mat-checkbox>
+        <a href="#" class="forgot-link">Forgot password?</a>
+      </div>
+
+      <button type="submit" [disabled]="form.invalid || isLoading"
+              class="auth-submit" mat-flat-button>
+        <mat-icon *ngIf="!isLoading">login</mat-icon>
+        <span *ngIf="isLoading">Signing in…</span>
+        <span *ngIf="!isLoading">Sign In</span>
+      </button>
+
+      <div class="auth-divider"><span>OR</span></div>
+
+      <button type="button" routerLink="/signup" class="auth-secondary" mat-stroked-button>
+        Create a new account
+      </button>
+    </form>
+  </div>
+
+  <p class="auth-footnote">POS System &middot; Inventory, orders and customers in one place</p>
+</div>

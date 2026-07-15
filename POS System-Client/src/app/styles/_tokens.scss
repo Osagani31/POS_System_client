@@ -1,0 +1,61 @@
+// Global design tokens — import once from src/styles.scss only.
+// Do not @use this file from component styles (Angular encapsulation breaks :root).
+
+:root {
+  // ---- Color: surfaces -----------------------------------------------------
+  --paper: #f7f5f0;
+  --paper-dim: #efece4;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --border: #e3ddd0;
+  --border-strong: #cfc6b3;
+
+  // ---- Color: brand --------------------------------------------------------
+  --pine-900: #10241d;
+  --pine-800: #163a31;
+  --pine-700: #1f4e42;
+  --pine-600: #2a6353;
+  --pine-100: #e3ede9;
+
+  --brass-600: #a9772f;
+  --brass-500: #c8862c;
+  --brass-100: #f6e9d3;
+
+  // ---- Color: semantic ---------------------------------------------------
+  --success: #2f7a4f;
+  --success-bg: #e7f3ea;
+  --warning: #b5791a;
+  --warning-bg: #fbf0dd;
+  --danger: #ac3327;
+  --danger-bg: #fbe9e6;
+  --info: #2b6a8f;
+
+  // ---- Color: text -------------------------------------------------------
+  --ink-900: #1c1b18;
+  --ink-700: #423f38;
+  --ink-500: #6b6660;
+  --ink-300: #a39c8e;
+  --ink-on-brand: #f7f5f0;
+
+  // ---- Typography --------------------------------------------------------
+  --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  // ---- Shape & elevation -------------------------------------------------
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px rgba(28, 27, 24, 0.06);
+  --shadow-md: 0 4px 16px rgba(28, 27, 24, 0.08);
+  --shadow-lg: 0 12px 32px rgba(16, 36, 29, 0.14);
+
+  // ---- Spacing scale -----------------------------------------------------
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+}

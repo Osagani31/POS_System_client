@@ -1,0 +1,126 @@
+<div class="page">
+
+  <header class="page-header">
+    <div class="title-block">
+      <p class="eyebrow">Point of Sale</p>
+      <h1>New Order</h1>
+      <p class="subtitle">Build an order from your catalog and check it out.</p>
+    </div>
+  </header>
+
+  <div class="pos-layout">
+
+    <!-- Catalog -->
+    <section class="catalog-card">
+      <mat-form-field class="search-field" appearance="outline">
+        <mat-label>Search products</mat-label>
+        <input matInput [(ngModel)]="productSearch" placeholder="Search catalog…" />
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+
+      <div *ngIf="isLoadingCatalog" class="state-block">
+        <mat-spinner diameter="34"></mat-spinner>
+        <p>Loading products…</p>
+      </div>
+
+      <div *ngIf="!isLoadingCatalog" class="product-grid">
+        <button
+          type="button"
+          class="product-tile"
+          *ngFor="let product of filteredProducts"
+          [disabled]="product.qtyOnHand <= 0"
+          (click)="addToCart(product)">
+          <span class="product-tile__icon"><mat-icon>inventory_2</mat-icon></span>
+          <span class="product-tile__name">{{ product.description }}</span>
+          <span class="product-tile__price">{{ product.unitPrice | currency:'LKR':'symbol':'1.2-2' }}</span>
+          <span class="product-tile__stock" [class.product-tile__stock--out]="product.qtyOnHand <= 0">
+            {{ product.qtyOnHand > 0 ? product.qtyOnHand + ' in stock' : 'Out of stock' }}
+          </span>
+        </button>
+
+        <p class="empty-catalog" *ngIf="!filteredProducts.length">
+          No products match "{{ productSearch }}".
+        </p>
+      </div>
+    </section>
+
+    <!-- Receipt / cart -->
+    <aside class="receipt-card">
+      <div class="receipt-head">
+        <h2>Current Order</h2>
+        <mat-icon>receipt_long</mat-icon>
+      </div>
+
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Customer</mat-label>
+        <mat-select [(ngModel)]="selectedCustomerId" placeholder="Select a customer">
+          <mat-option *ngFor="let customer of customers" [value]="customer._id">
+            {{ customer.name }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matPrefix>person_outline</mat-icon>
+      </mat-form-field>
+
+      <div class="receipt-lines">
+        <p class="empty-cart" *ngIf="!cart.length">
+          Tap a product on the left to add it to this order.
+        </p>
+
+        <div class="receipt-line" *ngFor="let line of cart">
+          <div class="line-info">
+            <span class="line-name">{{ line.product.description }}</span>
+            <span class="line-unit">{{ line.product.unitPrice | currency:'LKR':'symbol':'1.2-2' }} each</span>
+          </div>
+
+          <div class="line-qty">
+            <button mat-icon-button (click)="decrementLine(line)" matTooltip="Decrease">
+              <mat-icon>remove</mat-icon>
+            </button>
+            <span>{{ line.qty }}</span>
+            <button mat-icon-button (click)="incrementLine(line)"
+                    [disabled]="line.qty >= line.product.qtyOnHand" matTooltip="Increase">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+
+          <span class="line-total">{{ line.lineTotal | currency:'LKR':'symbol':'1.2-2' }}</span>
+
+          <button mat-icon-button class="line-remove" (click)="removeLine(line)" matTooltip="Remove">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="receipt-total">
+        <span>Total</span>
+        <span class="receipt-total__amount">{{ cartTotal | currency:'LKR':'symbol':'1.2-2' }}</span>
+      </div>
+
+      <button
+        mat-flat-button
+        class="checkout-button"
+        [disabled]="!canPlaceOrder"
+        (click)="placeOrder()">
+        <mat-icon *ngIf="!isPlacingOrder">point_of_sale</mat-icon>
+        <span *ngIf="isPlacingOrder">Placing order…</span>
+        <span *ngIf="!isPlacingOrder">Complete Order</span>
+      </button>
+      <p class="checkout-hint" *ngIf="cart.length && !selectedCustomerId">
+        Select a customer to complete this order.
+      </p>
+    </aside>
+  </div>
+
+  <!-- Recent orders -->
+  <section class="recent-orders" *ngIf="recentOrders.length">
+    <h2>Recent Orders</h2>
+    <div class="recent-list">
+      <div class="recent-row" *ngFor="let order of recentOrders">
+        <span class="recent-customer">{{ order.customer.name }}</span>
+        <span class="recent-items">{{ order.products.length }} item(s)</span>
+        <span class="recent-date">{{ order.date | date:'MMM d, y, h:mm a' }}</span>
+        <span class="recent-total">{{ order.totalCost | currency:'LKR':'symbol':'1.2-2' }}</span>
+      </div>
+    </div>
+  </section>
+</div>

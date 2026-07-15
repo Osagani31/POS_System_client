@@ -1,0 +1,23 @@
+@use '../../styles/data-page' as *;
+@use '../../styles/design-tokens' as *;
+
+:host {
+  @include data-page-layout;
+
+  .qty-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--success-bg);
+    color: var(--success);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+
+    &--low {
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+  }
+}

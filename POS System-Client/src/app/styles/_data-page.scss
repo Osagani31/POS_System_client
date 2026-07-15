@@ -1,0 +1,226 @@
+@use './design-tokens' as *;
+
+// Include this in any page that follows the list/table layout:
+// header -> search toolbar -> table card. Keeps customers/products/orders
+// visually identical without three copies of the same 150 lines.
+@mixin data-page-layout {
+  display: block;
+  font-family: var(--font-body);
+
+  .page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+
+    .eyebrow {
+      margin: 0 0 4px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--brass-600);
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ink-900);
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: 14px;
+      color: var(--ink-500);
+    }
+  }
+
+  .primary-action {
+    height: 42px;
+    border-radius: var(--radius-sm);
+    background: var(--pine-700) !important;
+    color: var(--ink-on-brand) !important;
+    font-weight: 600;
+    font-size: 13.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 18px;
+    white-space: nowrap;
+
+    &:hover { background: var(--pine-800) !important; }
+  }
+
+  .toolbar-card, .table-card {
+    @include card;
+    padding: var(--space-4);
+  }
+
+  .toolbar-card {
+    .search-field {
+      width: 100%;
+      max-width: 380px;
+      @include mat-field-theme;
+
+      ::ng-deep .mat-mdc-text-field-wrapper { background: var(--paper); }
+    }
+  }
+
+  .table-card { padding: 0; overflow: hidden; }
+
+  .state-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-7) 0;
+    color: var(--ink-500);
+    font-size: 13.5px;
+
+    ::ng-deep .mat-mdc-progress-spinner circle { stroke: var(--pine-700); }
+  }
+
+  .table-scroll { overflow-x: auto; }
+
+  .data-table {
+    width: 100%;
+    background: transparent;
+    font-family: var(--font-body);
+
+    ::ng-deep .mat-mdc-header-row {
+      background: var(--paper-dim);
+    }
+
+    ::ng-deep .mat-mdc-header-cell {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-500);
+      border-bottom: 1px solid var(--border);
+    }
+
+    ::ng-deep .mat-mdc-cell {
+      font-size: 13.5px;
+      color: var(--ink-900);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .table-row:hover {
+      background: var(--paper-dim);
+    }
+
+    .identity-cell {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-weight: 500;
+    }
+
+    .identity-avatar {
+      display: grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--pine-100);
+      color: var(--pine-700);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .muted-cell { color: var(--ink-500); }
+
+    .numeric-cell {
+      font-family: var(--font-mono);
+      font-weight: 500;
+      color: var(--ink-900);
+    }
+
+    .contact-cell {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--ink-700);
+
+      mat-icon { font-size: 16px; width: 16px; height: 16px; color: var(--ink-300); }
+    }
+
+    .actions-head { text-align: right; }
+
+    .action-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 2px;
+    }
+
+    .icon-btn {
+      color: var(--ink-500);
+      width: 34px;
+      height: 34px;
+      line-height: 34px;
+
+      mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+      &:hover { color: var(--pine-700); background: var(--pine-100); }
+
+      &--danger:hover { color: var(--danger); background: var(--danger-bg); }
+    }
+
+    .no-data-cell { border-bottom: none; }
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: var(--space-7) var(--space-4);
+    text-align: center;
+
+    mat-icon {
+      font-size: 34px;
+      width: 34px;
+      height: 34px;
+      color: var(--ink-300);
+      margin-bottom: 6px;
+    }
+
+    .empty-title {
+      margin: 0;
+      font-weight: 600;
+      font-size: 14.5px;
+      color: var(--ink-900);
+    }
+
+    .empty-subtitle {
+      margin: 0 0 var(--space-3);
+      font-size: 13px;
+      color: var(--ink-500);
+    }
+
+    button {
+      border-color: var(--border-strong);
+      color: var(--pine-700);
+      font-weight: 500;
+    }
+  }
+
+  ::ng-deep .mat-mdc-paginator {
+    background: transparent;
+    color: var(--ink-500);
+    font-family: var(--font-body);
+    border-top: 1px solid var(--border);
+  }
+}

@@ -1,0 +1,70 @@
+@use './design-tokens' as *;
+
+@mixin form-dialog {
+  display: block;
+  font-family: var(--font-body);
+  width: min(420px, 100%);
+
+  .dialog-container {
+    background: var(--surface);
+  }
+
+  ::ng-deep .mat-mdc-dialog-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 19px;
+    color: var(--ink-900);
+    padding: var(--space-5) var(--space-5) var(--space-2) !important;
+    margin: 0 !important;
+
+    // signature receipt-tape perforation under the dialog title
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      left: var(--space-5);
+      right: var(--space-5);
+      bottom: 0;
+      border-bottom: 2px dashed var(--border-strong);
+    }
+  }
+
+  ::ng-deep .mat-mdc-dialog-content {
+    padding: var(--space-4) var(--space-5) !important;
+    max-height: 70vh;
+  }
+
+  .form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .full-width { width: 100%; }
+
+  @include mat-field-theme;
+
+  ::ng-deep .mat-mdc-dialog-actions {
+    padding: var(--space-3) var(--space-5) var(--space-5) !important;
+    gap: var(--space-2);
+  }
+
+  .btn-cancel {
+    color: var(--ink-500) !important;
+    font-weight: 500;
+  }
+
+  .btn-submit {
+    background: var(--pine-700) !important;
+    color: var(--ink-on-brand) !important;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    &:hover:not(:disabled) { background: var(--pine-800) !important; }
+    &:disabled { opacity: 0.5; }
+  }
+}

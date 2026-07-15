@@ -1,0 +1,59 @@
+// Shared SCSS mixins for components. CSS variables live in _tokens.scss (global).
+
+@mixin card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+@mixin receipt-edge($position: top) {
+  position: relative;
+  &::#{if($position == top, 'before', 'after')} {
+    content: '';
+    position: absolute;
+    #{$position}: -1px;
+    left: 0;
+    right: 0;
+    height: 0;
+    border-top: 2px dashed var(--border-strong);
+  }
+}
+
+@mixin focus-ring {
+  outline: 2px solid var(--brass-500);
+  outline-offset: 2px;
+}
+
+@mixin mat-field-theme {
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      background: var(--paper);
+      border-radius: var(--radius-sm);
+    }
+    .mat-mdc-form-field-focus-overlay {
+      background: transparent;
+    }
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--border-strong) !important;
+    }
+    &.mat-focused .mdc-notched-outline__leading,
+    &.mat-focused .mdc-notched-outline__notch,
+    &.mat-focused .mdc-notched-outline__trailing {
+      border-color: var(--pine-700) !important;
+    }
+    .mat-mdc-form-field-icon-prefix > .mat-icon {
+      color: var(--ink-500);
+      margin-right: 6px;
+    }
+    .mdc-floating-label {
+      font-family: var(--font-body);
+      color: var(--ink-500);
+    }
+    &.mat-focused .mdc-floating-label {
+      color: var(--pine-700);
+    }
+  }
+}

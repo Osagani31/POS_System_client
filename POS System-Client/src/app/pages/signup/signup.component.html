@@ -1,0 +1,107 @@
+<div class="auth-screen">
+  <div class="auth-card auth-card--wide">
+
+    <div class="auth-brand">
+      <span class="brand-mark">
+        <mat-icon>storefront</mat-icon>
+      </span>
+      <span class="brand-name">POS System</span>
+    </div>
+
+    <div class="auth-heading">
+      <h1>Create your account</h1>
+      <p>Join us today and start managing your business.</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="signup()" class="auth-form">
+
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Full Name</mat-label>
+        <input formControlName="fullName" type="text" matInput placeholder="Ex. John Doe" autocomplete="name">
+        <mat-icon matPrefix>person_outline</mat-icon>
+        <mat-error *ngIf="form.get('fullName')?.hasError('required')">
+          Full name is required
+        </mat-error>
+        <mat-error *ngIf="form.get('fullName')?.hasError('minlength')">
+          Name must be at least 3 characters
+        </mat-error>
+        <mat-error *ngIf="form.get('fullName')?.hasError('pattern')">
+          Name should contain only letters
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" type="email" matInput placeholder="Ex. pat@example.com" autocomplete="email">
+        <mat-icon matPrefix>mail_outline</mat-icon>
+        <mat-error *ngIf="form.get('email')?.hasError('required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('email')">
+          Please enter a valid email
+        </mat-error>
+      </mat-form-field>
+
+      <div class="field-pair">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input formControlName="password" [type]="hidePassword ? 'password' : 'text'"
+                 matInput placeholder="Ex. Pass@123" autocomplete="new-password">
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                  type="button" class="visibility-toggle">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="form.get('password')?.hasError('required')">
+            Password is required
+          </mat-error>
+          <mat-error *ngIf="form.get('password')?.hasError('minlength')">
+            At least 6 characters
+          </mat-error>
+          <mat-error *ngIf="form.get('password')?.hasError('pattern')">
+            Needs uppercase, lowercase &amp; a number
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input formControlName="confirmPassword" [type]="hideConfirmPassword ? 'password' : 'text'"
+                 matInput placeholder="Re-enter password" autocomplete="new-password">
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword"
+                  type="button" class="visibility-toggle">
+            <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="form.get('confirmPassword')?.hasError('required')">
+            Please confirm your password
+          </mat-error>
+          <mat-error *ngIf="form.get('confirmPassword')?.hasError('passwordMismatch')">
+            Passwords do not match
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="terms-section">
+        <mat-checkbox formControlName="acceptTerms" color="primary">
+          I agree to the <a href="#" class="terms-link">Terms and Conditions</a>
+        </mat-checkbox>
+        <p class="terms-error" *ngIf="form.get('acceptTerms')?.touched && form.get('acceptTerms')?.hasError('required')">
+          You must accept the terms and conditions
+        </p>
+      </div>
+
+      <button type="submit" [disabled]="form.invalid || isLoading"
+              class="auth-submit" mat-flat-button>
+        <mat-icon *ngIf="!isLoading">person_add_alt</mat-icon>
+        <span *ngIf="isLoading">Creating account…</span>
+        <span *ngIf="!isLoading">Create Account</span>
+      </button>
+
+      <p class="auth-switch">
+        Already have an account? <a routerLink="/login" class="login-link">Log in</a>
+      </p>
+    </form>
+  </div>
+
+  <p class="auth-footnote">POS System &middot; Inventory, orders and customers in one place</p>
+</div>
